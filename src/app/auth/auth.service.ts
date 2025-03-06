@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
@@ -8,29 +8,31 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(credentials: { username: string; password: string }) {
-    return this.http
-      .post<any>(`http://localhost:8081/api/login`, credentials, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .pipe(
-        tap((response) => {
-          // localStorage.setItem('token', response.token);
-          console.dir(response);
-        }),
-      );
+  login(username: string, password: string) {
+    const body = new String().concat(
+      'username=',
+      username,
+      '&password=',
+      password,
+    );
+
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/x-www-form-urlencoded',
+    );
+
+    return this.http.post('http://localhost:8081/api/sites', body, {
+      headers: headers,
+    });
   }
-  // login(credentials: { username: string; password: string }): Observable<any> {
-  //   return this.http.post('http://localhost:8081/api/sites', credentials);
-  // }
 
   logout() {
     localStorage.removeItem('token');
   }
 
   isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
     return !!localStorage.getItem('token');
   }
 }

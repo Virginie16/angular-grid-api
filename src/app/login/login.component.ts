@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import e from 'cors';
 
 @Component({
   selector: 'app-login',
@@ -28,19 +27,9 @@ export class LoginComponent {
     private router: Router,
   ) {}
   onSubmit() {
-    this.authService
-      .login({ username: this.username, password: this.password })
-      .subscribe(
-        {
-          next: () => this.router.navigate(['/home']),
-          error: (e) => console.error(e),
-        },
-        // () => {
-        //   this.router.navigate(['/home']);
-        // },
-        // (error) => {
-        //   console.error('ahahahah', error);
-        // },
-      );
+    this.authService.login(this.username, this.password).subscribe({
+      next: () => this.router.navigate(['/home']),
+      error: (e) => console.error(e),
+    });
   }
 }
