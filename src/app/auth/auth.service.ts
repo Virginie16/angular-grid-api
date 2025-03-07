@@ -6,29 +6,42 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+  private apiUrl = 'http://localhost:8080/api/auth/login';
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string) {
-    const body = new String().concat(
-      'username=',
+  login(username: string, password: string): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(this.apiUrl, {
       username,
-      '&password=',
       password,
-    );
-
-    const headers = new HttpHeaders().set(
-      'Content-Type',
-      'application/x-www-form-urlencoded',
-    );
-
-    return this.http.post('http://localhost:8081/api/sites', body, {
-      headers: headers,
     });
   }
 
-  logout() {
-    localStorage.removeItem('token');
+  getDataWithToken(token: string) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log('Token:', token);
+    return this.http.get('http://localhost:8080/api/protected-endpoint', {
+      headers,
+    });
   }
+
+  // login(username: string, password: string) {
+  //   const body = new String().concat(
+  //     'username=',
+  //     username,
+  //     '&password=',
+  //     password,
+  //   );
+
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  //   return this.http.post('http://localhost:8080/api/auth/login', body, {
+  //     headers: headers,
+  //   });
+  // }
+
+  // logout() {
+  //   localStorage.removeItem('token');
+  // }
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');

@@ -1,1 +1,57 @@
-<p>home works!</p>
+<div class="container">
+  <h1>Accueil</h1>
+  <hr />
+
+  <h2 class="my-4">Sélection des infos</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <form (ngSubmit)="onSubmit(action.value)">
+    <label for="produit">Produit:</label>
+    <select
+      id="produit"
+      [(ngModel)]="selectedProduit"
+      name="produit"
+      class="form-control"
+      required
+    >
+      <option value="">Sélectionner un produit</option>
+      <!-- <option *ngFor="let produit of produits" [value]="produit">
+        {{ produit }}
+      </option> -->
+    </select>
+
+    <br /><br />
+
+    <label for="sites">Site:</label>
+    <select
+      id="sites"
+      [(ngModel)]="selectedSite"
+      name="site"
+      class="form-control"
+      required
+    >
+      <option value="">Sélectionner un site</option>
+      <option *ngFor="let site of sites" [value]="site">{{ site }}</option>
+    </select>
+
+    <br /><br />
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      name="action"
+      value="biocharges"
+    >
+      Afficher Biocharges
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      name="action"
+      value="changecontrols"
+    >
+      Afficher Change Controls
+    </button>
+  </form>
+</div>
