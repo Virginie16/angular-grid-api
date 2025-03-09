@@ -16,7 +16,7 @@ export const routes: Routes = [
   {
     path: 'change-control',
     component: ChangeControlComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   { path: '**', redirectTo: 'login' },
 ];

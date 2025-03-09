@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -23,16 +23,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent {
   username = 'admin';
   password = 'admin';
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
+  // constructor(private authService: AuthService, private router: Router) {}
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   onSubmit() {
     this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        console.log('✅ Token reçu:', response.token);
-        localStorage.setItem('token', response.token);
+      next: () => {
+        // console.log('✅ Token reçu:',  response.token);
+        console.log('ahahah');
+        // localStorage.getItem('token');
         this.router.navigate(['/home']);
       },
       error: (e: HttpErrorResponse) =>

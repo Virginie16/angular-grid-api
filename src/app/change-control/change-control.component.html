@@ -1,1 +1,9 @@
-<p>change-control works!</p>
+<h2>Liste des Change Controls</h2>
+
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<ul *ngIf="changeControls.length > 0">
+  <li *ngFor="let cc of changeControls">
+    {{ cc.reference }} - {{ cc.dateLancement }}
+  </li>
+</ul>

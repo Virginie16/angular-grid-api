@@ -16,9 +16,9 @@
       required
     >
       <option value="">Sélectionner un produit</option>
-      <!-- <option *ngFor="let produit of produits" [value]="produit">
+      <option *ngFor="let produit of produits" [value]="produit">
         {{ produit }}
-      </option> -->
+      </option>
     </select>
 
     <br /><br />
@@ -42,6 +42,7 @@
       class="btn btn-primary"
       name="action"
       value="biocharges"
+      (click)="onSubmit('biocharges')"
     >
       Afficher Biocharges
     </button>
@@ -49,9 +50,18 @@
       type="submit"
       class="btn btn-primary"
       name="action"
-      value="changecontrols"
+      value="change-control"
+      (click)="onSubmit('change-control')"
     >
       Afficher Change Controls
     </button>
+
+    <!-- <button (click)="loadLots()">Rechercher</button> -->
+
+    <!-- <ul>
+  <li *ngFor="let lot of lots">
+    {{ lot.nom }} - {{ lot.date }}
+  </li>
+</ul> -->
   </form>
 </div>
