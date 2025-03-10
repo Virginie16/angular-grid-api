@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BiochargeComponent } from '../biocharge/biocharge.component';
 import { ChangeControlComponent } from '../change-control/change-control.component';
 import { ChangeControl } from '../change-control/change-control.models';
+import { Biocharge } from '../biocharge/biocharge.models';
 
 @Injectable({
   providedIn: 'root',
@@ -42,16 +43,14 @@ export class ApiService {
   delete<T>(endpoint: string): Observable<T> {
     return this.http.delete<T>(`${this.apiUrl}/${endpoint}`);
   }
-  getLots(site: string, produit: string): Observable<BiochargeComponent[]> {
-    return this.http.get<BiochargeComponent[]>(`${this.apiUrl}lot/biocharge`, {
-      params: { site, produit },
-      headers: this.getAuthHeaders(),
-    });
+  getLotsBiocharges(site: string, produit: string): Observable<Biocharge[]> {
+    const url = `http://localhost:8080/api/lot/biocharge?site=${site}&produit=${produit}`;
+    return this.http.get<Biocharge[]>(url);
   }
 
   getLotsChangeControl(
     site: string,
-    produit: string
+    produit: string,
   ): Observable<ChangeControl[]> {
     const url = `http://localhost:8080/api/lot/change-control?site=${site}&produit=${produit}`;
     return this.http.get<ChangeControl[]>(url);

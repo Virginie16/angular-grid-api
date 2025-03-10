@@ -1,1 +1,7 @@
-<p>biocharge works!</p>
+<h2>Liste des Biocharges</h2>
+
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<ul *ngIf="biocharges.length > 0">
+  <li *ngFor="let b of biocharges">{{ b.numeroLot }} - {{ b.site }}</li>
+</ul>

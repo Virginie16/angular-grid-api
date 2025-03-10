@@ -30,9 +30,7 @@ export class LoginComponent {
   onSubmit() {
     this.authService.login(this.username, this.password).subscribe({
       next: () => {
-        // console.log('✅ Token reçu:',  response.token);
-        console.log('ahahah');
-        // localStorage.getItem('token');
+        // console.log('✅ Token reçu:', response.token);
         this.router.navigate(['/home']);
       },
       error: (e: HttpErrorResponse) =>
