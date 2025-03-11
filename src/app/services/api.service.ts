@@ -1,6 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { BiochargeComponent } from '../biocharge/biocharge.component';
 import { ChangeControlComponent } from '../change-control/change-control.component';
 import { ChangeControl } from '../change-control/change-control.models';
@@ -13,6 +17,19 @@ export class ApiService {
   private apiUrl = 'http://localhost:8080/api/'; // URL de ton backend
 
   constructor(private http: HttpClient) {}
+
+  // Méthode pour faire une requête à l'API
+  getData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/data`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Gérer l'erreur 401 spécifiquement
+          console.error("Erreur d'authentification :", error.error.message); // Ajustez en fonction du format de votre message d'erreur
+        }
+        return throwError(error);
+      }),
+    );
+  }
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
